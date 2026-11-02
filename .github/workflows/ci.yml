@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Build & Cairo Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Scarb
+      uses: software-mansion/setup-scarb@v1
+      with:
+        scarb-version: "2.21.0"
+
+    - name: Compile Contracts
+      run: scarb build
+
+    - name: Run Cairo Tests
+      run: scarb test
